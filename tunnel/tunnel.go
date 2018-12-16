@@ -22,6 +22,7 @@ type Tunnel struct {
 }
 
 type Config struct {
+	Proto            string
 	IP               string
 	Hostname         string
 	Port             string
@@ -139,14 +140,14 @@ func (t *Tunnel) startService() error {
 func (t *Tunnel) writeConfigFile() error {
 	configLines := []string{
 		"hostname: %s",
-		"url: %s:%s",
+		"url: %s://%s:%s",
 		"logfile: %s",
 		"origincert: %s",
-		"originservername: %s",
+		"origin-server-name: %s",
 		"no-autoupdate: true",
 	}
 
-	contents := fmt.Sprintf(strings.Join(configLines[:], "\n"), t.Config.Hostname, t.Config.IP, t.Config.Port, t.Service.LogFilePath(), t.Certificate.FullPath(), t.Config.OriginServerName)
+	contents := fmt.Sprintf(strings.Join(configLines[:], "\n"), t.Config.Hostname, t.Config.Proto, t.Config.IP, t.Config.Port, t.Service.LogFilePath(), t.Certificate.FullPath(), t.Config.OriginServerName)
 
 	err := afero.WriteFile(fs, t.Service.ConfigFilePath(), []byte(contents), 0644)
 	if err != nil {

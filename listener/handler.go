@@ -63,6 +63,7 @@ func (h *Handler) HandleContainer(id string) error {
 }
 
 func (h *Handler) handleStartEvent(event events.Message) error {
+	var proto string
 	container, err := h.Client.Inspect(event.ID)
 	if err != nil {
 		return err
@@ -70,8 +71,20 @@ func (h *Handler) handleStartEvent(event events.Message) error {
 
 	hostname := getLabel(heraHostname, container)
 	port := getLabel(heraPort, container)
+	originServerName := getLabel(heraOriginServerName, container)
+
+	if originServerName == "" {
+		originServerName = hostname
+	}
+
 	if hostname == "" || port == "" {
 		return nil
+	}
+
+	if port  == "443" {
+		proto = "https"
+	} else {
+		proto = "http"
 	}
 
 	log.Info("Hera container found, connecting to %s...", container.ID[:12])
@@ -87,9 +100,11 @@ func (h *Handler) handleStartEvent(event events.Message) error {
 	}
 
 	config := &tunnel.Config{
-		IP:       ip,
-		Hostname: hostname,
-		Port:     port,
+		Proto:            proto,
+		IP:               ip,
+		Hostname:         hostname,
+		Port:             port,
+		OriginServerName: originServerName,
 	}
 
 	tunnel := tunnel.New(config, cert)
