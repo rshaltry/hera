@@ -1,6 +1,6 @@
 NAME=hera
 BUILDER_IMAGE=$(NAME)-builder
-RELEASE_NAME=aschzero/$(NAME)
+RELEASE_NAME=rshaltry/$(NAME)
 PWD=$(shell pwd)
 
 default: build
@@ -15,7 +15,7 @@ test:
 	docker run --rm $(BUILDER_IMAGE) go test ./...
 
 run:
-	docker run --rm --name=$(NAME) --network=$(NAME) -v /var/run/docker.sock:/var/run/docker.sock -v $(PWD)/.certs:/certs -p 9020:9020 $(NAME)
+	docker run --rm --name=$(NAME) --network=$(NAME) -v /var/run/docker.sock:/var/run/docker.sock -v $(PWD)/certs:/certs -p 9020:9020 $(NAME)
 
 .PHONY:tunnel
 tunnel:

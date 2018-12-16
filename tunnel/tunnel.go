@@ -5,7 +5,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/aschzero/hera/certificate"
+	"github.com/rshaltry/hera/certificate"
 	logging "github.com/op/go-logging"
 	"github.com/spf13/afero"
 )
@@ -22,9 +22,10 @@ type Tunnel struct {
 }
 
 type Config struct {
-	IP       string
-	Hostname string
-	Port     string
+	IP               string
+	Hostname         string
+	Port             string
+	OriginServerName string
 }
 
 func New(config *Config, certificate *certificate.Certificate) *Tunnel {
@@ -141,10 +142,11 @@ func (t *Tunnel) writeConfigFile() error {
 		"url: %s:%s",
 		"logfile: %s",
 		"origincert: %s",
+		"originservername: %s",
 		"no-autoupdate: true",
 	}
 
-	contents := fmt.Sprintf(strings.Join(configLines[:], "\n"), t.Config.Hostname, t.Config.IP, t.Config.Port, t.Service.LogFilePath(), t.Certificate.FullPath())
+	contents := fmt.Sprintf(strings.Join(configLines[:], "\n"), t.Config.Hostname, t.Config.IP, t.Config.Port, t.Service.LogFilePath(), t.Certificate.FullPath(), t.Config.OriginServerName)
 
 	err := afero.WriteFile(fs, t.Service.ConfigFilePath(), []byte(contents), 0644)
 	if err != nil {

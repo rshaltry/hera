@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/aschzero/hera/certificate"
-	"github.com/aschzero/hera/listener"
-	"github.com/aschzero/hera/logger"
-	"github.com/aschzero/hera/version"
+	"github.com/rshaltry/hera/certificate"
+	"github.com/rshaltry/hera/listener"
+	"github.com/rshaltry/hera/logger"
+	"github.com/rshaltry/hera/version"
 	logging "github.com/op/go-logging"
 )
 

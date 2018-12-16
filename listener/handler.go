@@ -8,16 +8,17 @@ import (
 
 	"github.com/spf13/afero"
 
-	"github.com/aschzero/hera/certificate"
-	"github.com/aschzero/hera/tunnel"
+	"github.com/rshaltry/hera/certificate"
+	"github.com/rshaltry/hera/tunnel"
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/events"
 	tld "github.com/jpillora/go-tld"
 )
 
 const (
-	heraHostname = "hera.hostname"
-	heraPort     = "hera.port"
+	heraHostname         = "hera.hostname"
+	heraPort             = "hera.port"
+	heraOriginServerName = "hera.originServerName"
 )
 
 type Handler struct {

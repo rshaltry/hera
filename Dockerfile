@@ -1,11 +1,12 @@
 ## Builder image
 FROM golang:latest AS builder
 
-WORKDIR /go/src/github.com/aschzero/hera
+WORKDIR /go/src/github.com/rshaltry/hera
 
 COPY Gopkg.toml Gopkg.lock ./
 
-RUN go get -u github.com/golang/dep/...
+#RUN go get -u github.com/golang/dep/...
+RUN go get -u github.com/golang/dep/cmd/dep
 
 RUN dep ensure --vendor-only
 

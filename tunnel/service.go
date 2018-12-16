@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/aschzero/hera/exec"
+	"github.com/rshaltry/hera/exec"
 	"github.com/spf13/afero"
 )
 

@@ -3,7 +3,7 @@ package tunnel
 import (
 	"testing"
 
-	"github.com/aschzero/hera/certificate"
+	"github.com/rshaltry/hera/certificate"
 	"github.com/spf13/afero"
 )
 
